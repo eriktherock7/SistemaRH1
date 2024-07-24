@@ -32,8 +32,19 @@
                 <dd class="ps-3 fw-bolder">{{ employee.position_id }}</dd>
                 <dt class="mdc-typography mdc-theme--primary">Data de contratação</dt>
                 <dd class="ps-3 fw-bolder">{{ employee.date_hired|date:'M d, Y' }}</dd>
-                <dt class="mdc-typography mdc-theme--primary">Salário</dt>
-                <dd class="ps-3 fw-bolder">{{ employee.salary|intcomma }}</dd>
+                <dt class="mdc-typography mdc-theme--primary">Salário CLT</dt>
+                <dd class="ps-3 fw-bolder">R$ {{ employee.salaryCLT|intcomma }}</dd>
+                <dt class="mdc-typography mdc-theme--primary">Salário PJ</dt>
+                <dd class="ps-3 fw-bolder">R$ {{ employee.salaryPJ|intcomma }}</dd>
+                <dt class="mdc-typography mdc-theme--primary">Salário-Plano de Saúde</dt>
+                <dd class="ps-3 fw-bolder">R$ {{ employee.salaryPS|intcomma }}</dd>
+                <dt class="mdc-typography mdc-theme--primary">Salário-Vale Alimentação</dt>
+                <dd class="ps-3 fw-bolder">R$ {{ employee.salaryVA|intcomma }}</dd>
+                <dt class="mdc-typography mdc-theme--primary">Salário-Vale Refeição</dt>
+                <dd class="ps-3 fw-bolder">R$ {{ employee.salaryVR|intcomma }}</dd>
+                <dt class="mdc-typography mdc-theme--primary">Salário-Vale Transporte</dt>
+                <dd class="ps-3 fw-bolder">R$ {{ employee.salaryVT|intcomma }}</dd>
+
                 <dt class="mdc-typography mdc-theme--primary">Status</dt>
                 <dd class="ps-3 fw-bolder">
                     {% if employee.status == 1 %}

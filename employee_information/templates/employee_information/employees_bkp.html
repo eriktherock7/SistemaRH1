@@ -1,16 +1,10 @@
-{% extends "employee_information/base.html" %} 
-{% block pageContent %}
+{% extends "employee_information/base.html" %} {% block pageContent %}
 <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
     <div class="mdc-card py-2">
         <div class="d-flex justify-content-between align-items-center">
             <h4 class="card-title mb-0">Lista de funcionários</h4>
             <div class="text-start">
-                <button class="mdc-button mdc-button--raised mdc-ripple-upgraded btn-sm" id="create_new">
-                    <i class="material-icons mdc-button__icon">add</i><span> Adicionar Novo</span>
-                </button>
-                <button class="mdc-button mdc-button--raised mdc-ripple-upgraded btn-sm" id="download_csv">
-                    <i class="material-icons mdc-button__icon">download</i><span> Download CSV</span>
-                </button>
+                <button class="mdc-button mdc-button--raised mdc-ripple-upgraded btn-sm" id="create_new"><i class="material-icons mdc-button__icon">add</i><span> Adicionar Novo</span></button>
             </div>
         </div>
     </div>
@@ -18,7 +12,7 @@
 <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
     <div class="mdc-card">
         <div class="table-responsive">
-            <table id="employee_table" class="table table-striped table-bordered">
+            <table class="table table-striped table-bordered">
                 <colgroup>
                     <col width="5%">
                     <col width="15%">
@@ -84,8 +78,7 @@
         </div>
     </div>
 </div>
-{% endblock pageContent %} 
-{% block ScriptBlock %}
+{% endblock pageContent %} {% block ScriptBlock %}
 <script>
     $(function() {
         $('#create_new').click(function() {
@@ -99,10 +92,6 @@
         })
         $('.delete-data').click(function() {
             _conf("Tem certeza que quer excluir este funcionário?", "delete_employee", [$(this).attr('data-id')])
-        })
-
-        $('#download_csv').click(function() {
-            downloadCSV();
         })
     })
 
@@ -133,37 +122,36 @@
             }
         })
     }
-
-    function downloadCSV() {
-    var csv = [];
-    var rows = document.querySelectorAll("table tr");
-
-    for (var i = 0; i < rows.length; i++) {
-        var row = [], cols = rows[i].querySelectorAll("td, th");
-
-        for (var j = 0; j < cols.length - 1; j++) { // Skip the last column
-            var cellText = cols[j].innerText;
-
-            // Enclose values with commas in double quotes
-            if (cellText.includes(",")) {
-                cellText = `"${cellText}"`;
-            }
-
-            row.push(cellText);
-        }
-
-        csv.push(row.join(","));
-    }
-
-    // Download CSV
-    var csvFile = new Blob([csv.join("\n")], { type: "text/csv" });
-    var downloadLink = document.createElement("a");
-    downloadLink.download = "employees.csv";
-    downloadLink.href = window.URL.createObjectURL(csvFile);
-    downloadLink.style.display = "none";
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
-}
 </script>
+<script>
+    const table = document.querySelector('.table');
+  
+    table.querySelectorAll('.sortable').forEach(header => {
+      header.addEventListener('click', function() {
+        const sortColumn = this.dataset.sort;
+        const sortDirection = this.classList.contains('ascending') ? 'desc' : 'asc';
+  
+        sortTable(sortColumn, sortDirection);
+  
+        this.classList.toggle('ascending');  // Toggle sorting direction indicator (optional)
+      });
+    });
+  
+    function sortTable(column, direction) {
+      const rows = Array.from(table.querySelectorAll('tbody tr'));
+  
+      rows.sort((a, b) => {
+        const valueA = a.querySelector(`td[data-column="${column}"]`).textContent;
+        const valueB = b.querySelector(`td[data-column="${column}"]`).textContent;
+  
+        if (direction === 'asc') {
+          return valueA.localeCompare(valueB);  // Sort ascending
+        } else {
+          return valueB.localeCompare(valueA);  // Sort descending
+        }
+      });
+  
+      table.querySelector('tbody').innerHTML = rows.map(row => row.outerHTML).join('');
+    }
+  </script>
 {% endblock ScriptBlock %}

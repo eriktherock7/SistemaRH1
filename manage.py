@@ -3,7 +3,7 @@
 import os
 import sys
 
-import pandas , matplotlib.pyplot as plt
+'''import pandas , matplotlib.pyplot as plt'''
 
 
 def main():
