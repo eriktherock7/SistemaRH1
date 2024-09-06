@@ -32,6 +32,10 @@
                 <dd class="ps-3 fw-bolder">{{ employee.position_id }}</dd>
                 <dt class="mdc-typography mdc-theme--primary">Data de contratação</dt>
                 <dd class="ps-3 fw-bolder">{{ employee.date_hired|date:'M d, Y' }}</dd>
+                <dt class="mdc-typography mdc-theme--primary">Gestor do cliente</dt>
+                <dd class="ps-3 fw-bolder">{{ employee.gestorcliente }}</dd>
+                <dt class="mdc-typography mdc-theme--primary">Gestor da Extractta</dt>
+                <dd class="ps-3 fw-bolder">{{ employee.gestorextractta }}</dd>
                 <dt class="mdc-typography mdc-theme--primary">Salário CLT</dt>
                 <dd class="ps-3 fw-bolder">R$ {{ employee.salaryCLT|intcomma }}</dd>
                 <dt class="mdc-typography mdc-theme--primary">Salário PJ</dt>

@@ -179,25 +179,21 @@ def employees(request):
 @login_required
 def manage_employees(request):
     employee = {}
-    departments = Department.objects.filter(status=1).all()
-    positions = Position.objects.filter(status=1).all()
+    departments = Department.objects.filter(status = 1).all() 
+    positions = Position.objects.filter(status = 1).all() 
     if request.method == 'GET':
-        data = request.GET
+        data =  request.GET
         id = ''
         if 'id' in data:
-            id = data['id']
+            id= data['id']
         if id.isnumeric() and int(id) > 0:
             employee = Employees.objects.filter(id=id).first()
-            if employee:
-                print(f"Employee found: {employee.firstname} {employee.lastname}, salaryCLT: {employee.salaryCLT}, salaryPJ: {employee.salaryPJ} salaryVT: {employee.salaryVT}")
-            else:
-                print("No employee found with the given id")
     context = {
-        'employee': employee,
-        'departments': departments,
-        'positions': positions
+        'employee' : employee,
+        'departments' : departments,
+        'positions' : positions
     }
-    return render(request, 'employee_information/manage_employee.html', context)
+    return render(request, 'employee_information/manage_employee.html',context)
 
 @login_required
 def save_employee(request):
@@ -227,9 +223,7 @@ def save_employee(request):
                                           address = data['address'], 
                                           department_id = dept, 
                                           position_id = pos, 
-                                          date_hired = data['date_hired'],
-                                          gestorextractta = data['gestorextractta'],
-                                          gestorcliente = data['gestorcliente'],
+                                          date_hired = data['date_hired'], 
                                           salaryCLT = data['salaryCLT'], 
                                           salaryPJ = data['salaryPJ'], 
                                           salaryVA = data['salaryVA'], 
@@ -249,9 +243,7 @@ def save_employee(request):
                                            address = data['address'], 
                                            department_id = dept, 
                                            position_id = pos, 
-                                           date_hired = data['date_hired'],
-                                           gestorextractta = data['gestorextractta'], 
-                                           gestorcliente = data['gestorcliente'], 
+                                           date_hired = data['date_hired'], 
                                            salaryCLT = data['salaryCLT'], 
                                            salaryPJ = data['salaryPJ'], 
                                            salaryVA = data['salaryVA'], 
@@ -276,8 +268,6 @@ def save_employee(request):
                               "department_id" : data['department_id'],
                               "position_id" : data['position_id'],
                               "date_hired" : data['date_hired'],
-                              "gestorextractta": data['gestorextractta'],
-                              "gestorcliente": data['gestorcliente'],
                               "salaryCLT" : data['salaryCLT'],
                               "salaryPJ" : data['salaryPJ'],
                               "salaryPS" : data['salaryPS'],
