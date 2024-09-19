@@ -46,7 +46,9 @@ class Employees(models.Model):
     salaryVR=models.FloatField(default=0.0)
     salaryVT=models.FloatField(default=0.0)
     salaryPS=models.FloatField(default=0.0)
-    status = models.IntegerField() 
+    salaryVC=models.FloatField(default=0.0)
+    tipoBeneficio = models.IntegerField(default=0)
+    status = models.IntegerField()
     date_added = models.DateTimeField(default=timezone.now) 
     date_updated = models.DateTimeField(auto_now=True) 
 

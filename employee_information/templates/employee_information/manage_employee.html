@@ -105,30 +105,30 @@
                     <label for="salaryCLT" class="control-label">Salário CLT</label>
                     <input type="number" step="any" name="salaryCLT" id="salaryCLT" class="form-control form-control-sm rounded-0" value='{% if employee.salaryCLT %}{{ employee.salaryCLT|stringformat:"d" }}{% else %}0{% endif %}' required>
                 </div>
-
-
-                
                 <div class="form-group mb-3">
                     <label for="salaryPJ" class="control-label">Salário PJ</label>
                     <input type="number" step="any" name="salaryPJ" id="salaryPJ" class="form-control form-control-sm rounded-0" value='{% if employee.salaryPJ %}{{ employee.salaryPJ|stringformat:"d" }}{% else %}0{% endif %}' required>
                 </div>
                 <div class="form-group mb-3">
-                    <label for="salaryPS" class="control-label">Salário-Plano de Saúde</label>
+                    <label for="salaryPS" class="control-label">Benefício Plano de Saúde</label>
                     <input type="number" step="any" name="salaryPS" id="salaryPS" class="form-control form-control-sm rounded-0" value='{% if employee.salaryPS %}{{ employee.salaryPS|stringformat:"d" }}{% else %}0{% endif %}' required>
                 </div>
                 <div class="form-group mb-3">
-                    <label for="salaryVA" class="control-label">Salário-Vale Alimentação</label>
+                    <label for="salaryVA" class="control-label">Benefício Vale-Alimentação</label>
                     <input type="number" step="any" name="salaryVA" id="salaryVA" class="form-control form-control-sm rounded-0" value='{% if employee.salaryVA %}{{ employee.salaryVA|stringformat:"d" }}{% else %}0{% endif %}' required>
                 </div>
                 <div class="form-group mb-3">
-                    <label for="salaryVR" class="control-label">Salário-Vale Refeição </label>
+                    <label for="salaryVR" class="control-label">Benefício Vale-Refeição </label>
                     <input type="number" step="any" name="salaryVR" id="salaryVR" class="form-control form-control-sm rounded-0" value='{% if employee.salaryVR %}{{ employee.salaryVR|stringformat:"d" }}{% else %}0{% endif %}' required>
                 </div>
                 <div class="form-group mb-3">
-                    <label for="salaryVT" class="control-label">Salário-Vale Transporte</label>
+                    <label for="salaryVT" class="control-label">Benefício Vale-Transporte</label>
                     <input type="number" step="any" name="salaryVT" id="salaryVT" class="form-control form-control-sm rounded-0" value='{% if employee.salaryVT %}{{ employee.salaryVT|stringformat:"d" }}{% else %}0{% endif %}' required>
                 </div>
-
+                <div class="form-group mb-3"></div>
+                    <label for="salaryVC" class="control-label">Benefício Vale-Combustível</label>
+                    <input type="number" step="any" name="salaryVT" id="salaryVT" class="form-control form-control-sm rounded-0" value='{% if employee.salaryVT %}{{ employee.salaryVT|stringformat:"d" }}{% else %}0{% endif %}' required>
+                </div>
                 <!--<input type="number" step="any" name="salary" id="salary" class="form-control form-control-sm rounded-0" value="{% if employee.salary %}{{employee.salary}}{% endif %}" required>-->
 
                 <div class="form-group mb-3">

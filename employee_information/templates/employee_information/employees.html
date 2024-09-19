@@ -46,6 +46,7 @@
                     <col width="3%">
                     <col width="2%">
                     <col width="2%">
+                    <!-- 
                     <col width="3%">
                     <col width="3%">
                     <col width="3%">
@@ -53,6 +54,7 @@
                     <col width="3%">
                     <col width="5%">
                     <col width="5%">
+                    -->
                 </colgroup>
                 <thead>
                     <tr>
@@ -61,6 +63,7 @@
                         <th class="text-center py-1">Nome</th>
                         <th class="text-center py-1">Empresa cliente</th>
                         <th class="text-center py-1">Cargo</th>
+                        <!--
                         <th class="text-center py-1">Stacks</th>
                         <th class="text-center py-1">Gestor do Cliente</th>
                         <th class="text-center py-1">Gestor da Extractta</th>
@@ -70,7 +73,11 @@
                         <th class="text-center py-1">Sal VA</th>
                         <th class="text-center py-1">Sal VR</th>
                         <th class="text-center py-1">Sal VT</th>
+                        <th class="text-center py-1">Sal VC</th>
+                    -->
+                        <th class="text-center py-1">Stacks</th>
                         <th class="text-center py-1">Status</th>
+                        <th class="text-center py-1">Tipo de Benefício</th>
                         <th class="text-center py-1">Ação</th>
                     </tr>
                 </thead>
@@ -83,6 +90,8 @@
                         <td class="px-2 py-1 text-start">{{ employee.department_id }}</td>
                         <td class="px-2 py-1 text-start">{{ employee.position_id }}</td>
                         <td class="px-2 py-1 text-start">{{ employee.address }}</td>
+
+                        <!-- 
                         <td class="px-2 py-1 text-start">{{ employee.gestorcliente|default:"" }}</td>
                         <td class="px-2 py-1 text-start">{{ employee.gestorextractta|default:"" }}</td>
                         <td class="px-2 py-1 text-start">{{ employee.salaryCLT }}</td>
@@ -91,11 +100,20 @@
                         <td class="px-2 py-1 text-start">{{ employee.salaryVA }}</td>
                         <td class="px-2 py-1 text-start">{{ employee.salaryVR }}</td>
                         <td class="px-2 py-1 text-start">{{ employee.salaryVT }}</td>
+                        <td class="px-2 py-1 text-start">{{ employee.salaryVC }}</td>
+                       -->
                         <td class="px-2 py-1 text-center">
                             {% if employee.status == 1 %}
                             <span class="badge bg-primary rounded-pill px-3">Ativo</span> {% else %}
                             <span class="badge bg-secondary rounded-pill px-3">Inativo</span> {% endif %}
                         </td>
+
+                        <td class="px-2 py-1 text-center">
+                            {% if employee.tipoBeneficio == 1 %}
+                            <span class="badge bg-primary rounded-pill px-3">Extractta</span> {% else %}
+                            <span class="badge bg-secondary rounded-pill px-3">Cliente</span> {% endif %}
+                        </td>
+
                         <td class="px-2 py-1 text-center">
                             <button class="mdc-button mdc-button--raised p-1 icon-button mdc-ripple-upgraded view-data" type="button" data-id="{{ employee.pk }}" title="View Details">
                                 <i class="material-icons mdc-button__icon">visibility</i>
@@ -111,6 +129,17 @@
                     {% endfor %}
                 </tbody>
             </table>
+
+            <!--
+            Legenda: <br>
+            Sal CLT - Salário-base Pessoa física <br> 
+            Sal PJ - Salário-base Pessoa Jurídica <br>
+            Sal PS - Benefício Plano de Saúde <br>
+            Sal VA - Benefício Vale-Alimentação <br>
+            Sal VR - Benefício Vale-Refeição <br>
+            Sal VT - Benefício Vale-Transporte <br>
+            Sal VC - Benefício Vale-Combustível <br>
+        -->
         </div>
     </div>
 </div>
@@ -135,7 +164,7 @@
                                      .map(checkbox => checkbox.value);
 
         rows.forEach(row => {
-            const statusCell = row.cells[14].textContent.trim(); // Atualize o índice do status para corresponder ao novo índice
+            const statusCell = row.cells[9].textContent.trim(); // Atualize o índice do status para corresponder ao novo índice
             if (checkedStatuses.includes(statusCell)) {
                 row.style.display = '';
             } else {

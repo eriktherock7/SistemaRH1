@@ -235,7 +235,9 @@ def save_employee(request):
                                           salaryVA = data['salaryVA'], 
                                           salaryVR = data['salaryVR'], 
                                           salaryVT = data['salaryVT'], 
-                                          salaryPS = data['salaryPS'], 
+                                          salaryPS = data['salaryPS'],
+                                          salaryVC = data['salaryVC'],
+                                          tipoBeneficio = data['tipoBeneficio'], 
                                           status = data['status'])
             else:
                 save_employee = Employees(code=data['code'],
@@ -258,6 +260,8 @@ def save_employee(request):
                                            salaryVR = data['salaryVR'], 
                                            salaryVT = data['salaryVT'], 
                                            salaryPS = data['salaryPS'], 
+                                           salaryVC = data['salaryVC'], 
+                                           tipoBeneficio = data['tipoBeneficio'], 
                                            status = data['status'])
                 save_employee.save()
             resp['status'] = 'success'
@@ -284,6 +288,8 @@ def save_employee(request):
                               "salaryVA" : data['salaryVA'],
                               "salaryVR" : data['salaryVR'],
                               "salaryVT" : data['salaryVT'],
+                              "salaryVC" : data['salaryVC'],
+                              "tipoBeneficio": data['tipoBeneficio'],
                               "status" : data['status']
                               }))
     return HttpResponse(json.dumps(resp), content_type="application/json")
