@@ -1,59 +1,32 @@
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-.accordion {
-  background-color: #eee;
-  color: #444;
-  cursor: pointer;
-  padding: 12px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 16px;
-  transition: 0.4s;
-}
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Sep 20 16:25:25 2024
 
-.active, .accordion:hover {
-  background-color: #ccc;
-}
+@author: felip
+"""
 
-.panel {
-  padding: 0 15px;
-  background-color: white;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
-}
-</style>
-</head>
-<div class="container">
-    
-    <form action="" id="employee-form"> <div>
-	<button class="accordion">Dados pessoais</button><br />
-	
+<div class="container-fluid">
+    <form action="" id="employee-form">
         <input type="hidden" name="id" value="{% if employee.pk %}{{ employee.pk}}{% endif %}">
-
-		<div class="row">
-            
-                <div class="col-6">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group mb-3">
                     <label for="code" class="control-label">ID de funcionário</label>
                     <input type="text" name="code" id="code" class="form-control form-control-sm rounded-0" value="{% if employee.code %}{{ employee.code }}{% endif %}" required>
                 </div>
-                <div class="col-6">
+                <div class="form-group mb-3">
                     <label for="firstname" class="control-label">Primeiro Nome</label>
                     <input type="text" name="firstname" id="firstname" class="form-control form-control-sm rounded-0" value="{% if employee.firstname %}{{ employee.firstname }}{% endif %}" required>
                 </div>
-				
-                <div class="col-6">
+                <div class="form-group mb-3">
                     <label for="middlename" class="control-label">Nome do Meio</label>
                     <input type="text" name="middlename" id="middlename" class="form-control form-control-sm rounded-0" value="{% if employee.middlename %}{{ employee.middlename }}{% endif %}">
                 </div>
-                <div class="col-6">
+                <div class="form-group mb-3">
                     <label for="lastname" class="control-label">Último Nome</label>
                     <input type="text" name="lastname" id="lastname" class="form-control form-control-sm rounded-0" value="{% if employee.lastname %}{{ employee.lastname }}{% endif %}" required>
                 </div>
-                <div class="col-6">
+                <div class="form-group mb-3">
                     <label for="gender" class="control-label">Sexo</label>
                     <select name="gender" id="gender" class="form-control form-control-sm rounded-0" required>
                         {% if employee.gender and employee.gender == 'Male' %}
@@ -69,26 +42,25 @@
                         {% endif %}
                     </select>
                 </div>
-                <div class="col-6">
+                <div class="form-group mb-3">
                     <label for="dob" class="control-label">Data de Aniversário</label>
                     <input type="date" name="dob" id="dob" class="form-control form-control-sm rounded-0" value="{% if employee.dob %}{{ employee.dob|date:'Y-m-d' }}{% endif %}" required>
                 </div>
-                <div class="col-6">
+                <div class="form-group mb-3">
                     <label for="email" class="control-label">Email</label>
                     <input type="email" name="email" id="email" class="form-control form-control-sm rounded-0" value="{% if employee.email %}{{ employee.email}}{% endif %}" required>
                 </div>
-                <div class="col-6">
+                <div class="form-group mb-3">
                     <label for="contact" class="control-label">Número de Contato</label>
                     <input type="text" name="contact" id="contact" class="form-control form-control-sm rounded-0" value="{% if employee.contact %}{{ employee.contact }}{% endif %}" required>
                 </div>
-                <div class="col-6">
+                <div class="form-group mb-3">
                     <label for="address" class="control-label">Stacks</label>
                     <textarea rows="3" name="address" id="address" class="form-control form-control-sm rounded-0" required>{% if employee.address %}{{ employee.address}}{% endif %}</textarea>
                 </div>
-			
-			<button class="accordion">Informações do contrato</button>
-            
-                <div class="col-6">
+            </div>
+            <div class="col-md-6">
+                <div class="form-group mb-3">
                     <label for="department_id" class="control-label">Alocado em qual empresa cliente?</label>
                     <select name="department_id" id="department_id" class="form-select form-select-sm rounded-0" required>
                         {% if not employee.department_id %}
@@ -106,7 +78,7 @@
 
                     </select>
                 </div>
-                <div class="col-6">
+                <div class="form-group mb-3">
                     <label for="position_id" class="control-label">Cargo</label>
                     <select name="position_id" id="position_id" class="form-select form-select-sm rounded-0" required>
                         {% if not employee.position_id %}
@@ -124,29 +96,53 @@
 
                     </select>
                 </div>
-                <div class="col-6">
+                <div class="form-group mb-3">
                     <label for="date_hired" class="control-label">Data de entrada</label>
                     <input type="date" name="date_hired" id="date_hired" class="form-control form-control-sm rounded-0" value="{% if employee.date_hired%}{{ employee.date_hired|date:'Y-m-d' }}{% endif %}" required>
                 </div>
-                <div class="col-6">
+                <div class="form-group mb-3">
                     <label for="firstname" class="control-label">Gestor da Cliente</label>
                     <input type="text" name="gestorcliente" id="gestorcliente" class="form-control form-control-sm rounded-0" value="{% if employee.gestorcliente %}{{ employee.gestorcliente }}{% endif %}">
                 </div>
-                <div class="col-6">
+                <div class="form-group mb-3">
                     <label for="firstname" class="control-label">Gestor da Extractta</label>
                     <input type="text" name="gestorextractta" id="gestorextractta" class="form-control form-control-sm rounded-0" value="{% if employee.gestorextractta %}{{ employee.gestorextractta }}{% endif %}">
                 </div>
-                <div class="col-6">
+                <div class="form-group mb-3">
                     <label for="salaryCLT" class="control-label">Salário CLT</label>
                     <input type="number" step="any" name="salaryCLT" id="salaryCLT" class="form-control form-control-sm rounded-0" value='{% if employee.salaryCLT %}{{ employee.salaryCLT|stringformat:"d" }}{% else %}0{% endif %}' required>
                 </div>
-                <div class="col-6">
+                <div class="form-group mb-3">
                     <label for="salaryPJ" class="control-label">Salário PJ</label>
                     <input type="number" step="any" name="salaryPJ" id="salaryPJ" class="form-control form-control-sm rounded-0" value='{% if employee.salaryPJ %}{{ employee.salaryPJ|stringformat:"d" }}{% else %}0{% endif %}' required>
                 </div>
-				<div class="col-6">
+                <div class="form-group mb-3">
+                    <label for="salaryPS" class="control-label">Benefício Plano de Saúde</label>
+                    <input type="number" step="any" name="salaryPS" id="salaryPS" class="form-control form-control-sm rounded-0" value='{% if employee.salaryPS %}{{ employee.salaryPS|stringformat:"d" }}{% else %}0{% endif %}' required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="salaryVA" class="control-label">Benefício Vale-Alimentação</label>
+                    <input type="number" step="any" name="salaryVA" id="salaryVA" class="form-control form-control-sm rounded-0" value='{% if employee.salaryVA %}{{ employee.salaryVA|stringformat:"d" }}{% else %}0{% endif %}' required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="salaryVR" class="control-label">Benefício Vale-Refeição </label>
+                    <input type="number" step="any" name="salaryVR" id="salaryVR" class="form-control form-control-sm rounded-0" value='{% if employee.salaryVR %}{{ employee.salaryVR|stringformat:"d" }}{% else %}0{% endif %}' required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="salaryVT" class="control-label">Benefício Vale-Transporte</label>
+                    <input type="number" step="any" name="salaryVT" id="salaryVT" class="form-control form-control-sm rounded-0" value='{% if employee.salaryVT %}{{ employee.salaryVT|stringformat:"d" }}{% else %}0{% endif %}' required>
+                </div>
+                <div class="form-group mb-3"></div>
+                    <label for="salaryVC" class="control-label">Benefício Vale-Combustível</label>
+                    <input type="number" step="any" name="salaryVT" id="salaryVT" class="form-control form-control-sm rounded-0" value='{% if employee.salaryVT %}{{ employee.salaryVT|stringformat:"d" }}{% else %}0{% endif %}' required>
+                </div>
+				
+
+                <!--<input type="number" step="any" name="salary" id="salary" class="form-control form-control-sm rounded-0" value="{% if employee.salary %}{{employee.salary}}{% endif %}" required>-->
+
+                <div class="form-group mb-3">
                     <label for="status" class="control-label">Status</label>
-                    <select name="status" id="status" class="form-select form-select-sm rounded-0" required>
+                    <select name="status" id="status" class="form-select form-select-sm rounded-0"  required>
                         {% if employee.status == 1 %}
                         <option value="1" selected >Ativo</option>
                         {% else %}
@@ -159,40 +155,9 @@
                         <option value="0">Inativo</option>
                         {% endif %}
                     </select>
-				</div>
-				<button class="accordion">Benefícios</button>
-                <div class="col-6">
-                    <label for="salaryPS" class="control-label">Benefício Plano de Saúde</label>
-                    <input type="number" step="any" name="salaryPS" id="salaryPS" class="form-control form-control-sm rounded-0" value='{% if employee.salaryPS %}{{ employee.salaryPS|stringformat:"d" }}{% else %}0{% endif %}' required>
                 </div>
-                <div class="col-6">
-                    <label for="salaryVA" class="control-label">Benefício Vale-Alimentação</label>
-                    <input type="number" step="any" name="salaryVA" id="salaryVA" class="form-control form-control-sm rounded-0" value='{% if employee.salaryVA %}{{ employee.salaryVA|stringformat:"d" }}{% else %}0{% endif %}' required>
-                </div>
-                <div class="col-6">
-                    <label for="salaryVR" class="control-label">Benefício Vale-Refeição </label>
-                    <input type="number" step="any" name="salaryVR" id="salaryVR" class="form-control form-control-sm rounded-0" value='{% if employee.salaryVR %}{{ employee.salaryVR|stringformat:"d" }}{% else %}0{% endif %}' required>
-                </div>
-                <div class="col-6">
-                    <label for="salaryVT" class="control-label">Benefício Vale-Transporte</label>
-                    <input type="number" step="any" name="salaryVT" id="salaryVT" class="form-control form-control-sm rounded-0" value='{% if employee.salaryVT %}{{ employee.salaryVT|stringformat:"d" }}{% else %}0{% endif %}' required>
-                </div>
-                <div class="col-6">
-                    <label for="salaryVC" class="control-label">Benefício Vale-Combustível</label>
-                    <input type="number" step="any" name="salaryVT" id="salaryVT" class="form-control form-control-sm rounded-0" value='{% if employee.salaryVT %}{{ employee.salaryVT|stringformat:"d" }}{% else %}0{% endif %}' required>
-                
-				<div class="col-6">
-					<label for="beneficioConcedido" >Benefício Concedido  </label>
-					<input type="checkbox"  name="beneficioConcedido" id="beneficioConcedido" value='{% if employee.beneficioConcedido %}}{% else %}0{% endif %}'> 
-                </div>
-				
-                <!--<input type="number" step="any" name="salary" id="salary" class="form-control form-control-sm rounded-0" value="{% if employee.salary %}{{employee.salary}}{% endif %}" required>-->
-
-
             </div>
         </div>
-		<script>
-
     </form>
 </div>
 <script>
@@ -246,7 +211,6 @@
         })
     })
 </script>
-
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
         const salaryInput = document.getElementById('salaryPJ');

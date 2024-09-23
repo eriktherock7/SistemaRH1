@@ -177,6 +177,7 @@ def employees(request):
     }
     return render(request, 'employee_information/employees.html',context)
 @login_required
+#Alteração de funcionario
 def manage_employees(request):
     employee = {}
     departments = Department.objects.filter(status=1).all()
@@ -191,14 +192,14 @@ def manage_employees(request):
             if employee:
                 print(f"Employee found: {employee.firstname} {employee.lastname}, salaryCLT: {employee.salaryCLT}, salaryPJ: {employee.salaryPJ} salaryVT: {employee.salaryVT}")
             else:
-                print("No employee found with the given id")
+                print("Nenhum funcionário encontrado com esse ID")
     context = {
         'employee': employee,
         'departments': departments,
         'positions': positions
     }
     return render(request, 'employee_information/manage_employee.html', context)
-
+#criação de funcionario
 @login_required
 def save_employee(request):
     data =  request.POST
@@ -206,11 +207,14 @@ def save_employee(request):
     if (data['id']).isnumeric() and int(data['id']) > 0:
         check  = Employees.objects.exclude(id = data['id']).filter(code = data['code'])
     else:
-        check  = Employees.objects.filter(code = data['code'])
-
+        check  = Employees.objects.filter(code = data['code'])       
+    #Validação da pagina de criação de funcionario
     if len(check) > 0:
         resp['status'] = 'failed'
-        resp['msg'] = 'Code Already Exists'
+        resp['msg'] = 'Já existe um usuário com esse ID'
+    elif (int(data['salaryCLT']) or int(data['salaryPJ'])) == 0:
+        resp['status'] = 'failed'
+        resp['msg'] = 'É necessário preencher pelo menos um campo de salário'
     else:
         try:
             dept = Department.objects.filter(id=data['department_id']).first()
@@ -237,6 +241,7 @@ def save_employee(request):
                                           salaryVT = data['salaryVT'], 
                                           salaryPS = data['salaryPS'],
                                           salaryVC = data['salaryVC'],
+                                          beneficioConcedido = data['beneficioConcedido'],
                                           tipoBeneficio = data['tipoBeneficio'], 
                                           status = data['status'])
             else:

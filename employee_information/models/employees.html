@@ -1,0 +1,340 @@
+{% extends "employee_information/base.html" %} 
+{% block pageContent %}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card py-2">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0">Lista de funcionários</h4>
+            <div class="text-start">
+                <button class="mdc-button mdc-button--raised mdc-ripple-upgraded btn-sm" id="create_new">
+                    <i class="material-icons mdc-button__icon">add</i><span> Adicionar Novo</span>
+                </button>
+                <button class="mdc-button mdc-button--raised mdc-ripple-upgraded btn-sm" id="download_csv">
+                    <i class="material-icons mdc-button__icon">download</i><span> Download CSV</span>
+                </button>
+            </div>
+        </div>
+        <!-- Search input field -->
+        <input type="text" id="searchInput" onkeyup="filterTableSearch()" placeholder="Procure por qualquer item..." style="margin-top: 10px;">
+    </div>
+</div>
+<!-- Checkbox filters -->
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card py-2">
+        <div id="checkbox-container">
+            <label><input type="checkbox" class="filter-checkbox" value="Ativo" checked> Ativo</label>
+            <label><input type="checkbox" class="filter-checkbox" value="Inativo" checked> Inativo</label>
+        </div>
+        <!-- Sort buttons -->
+        <div class="text-start mt-3">
+            <button class="mdc-button mdc-button--raised mdc-ripple-upgraded btn-sm" onclick="sortTable(2)">Ordenar por Nome</button>
+            <button class="mdc-button mdc-button--raised mdc-ripple-upgraded btn-sm" onclick="sortTable(3)">Ordenar por Empresa Cliente</button>
+            <button class="mdc-button mdc-button--raised mdc-ripple-upgraded btn-sm" onclick="sortTable(4)">Ordenar por Cargo</button>
+        </div>
+    </div>
+</div>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+        <div class="table-responsive">
+            <table id="employee_table" class="table table-striped table-bordered">
+                <colgroup>
+                    <col width="5%">
+                    <col width="14%">
+                    <col width="14%">
+                    <col width="14%">
+                    <col width="13%">
+                    <col width="12%">
+                    <col width="3%">
+                    <col width="2%">
+                    <col width="2%">
+                    <!-- 
+                    <col width="3%">
+                    <col width="3%">
+                    <col width="3%">
+                    <col width="3%">
+                    <col width="3%">
+                    <col width="5%">
+                    <col width="5%">
+                    -->
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="text-center py-1">#</th>
+                        <th class="text-center py-1">ID</th>
+                        <th class="text-center py-1">Nome</th>
+                        <th class="text-center py-1">Empresa cliente</th>
+                        <th class="text-center py-1">Cargo</th>
+                        <!--
+                        <th class="text-center py-1">Stacks</th>
+                        <th class="text-center py-1">Gestor do Cliente</th>
+                        <th class="text-center py-1">Gestor da Extractta</th>
+                        <th class="text-center py-1">Sal CLT</th>
+                        <th class="text-center py-1">Sal PJ</th>
+                        <th class="text-center py-1">Sal PS</th>
+                        <th class="text-center py-1">Sal VA</th>
+                        <th class="text-center py-1">Sal VR</th>
+                        <th class="text-center py-1">Sal VT</th>
+                        <th class="text-center py-1">Sal VC</th>
+                    -->
+					    <th class="text-center py-1">Benefício Concedido</th>
+                        <th class="text-center py-1">Stacks</th>
+                        <th class="text-center py-1">Status</th>
+                        <th class="text-center py-1">Tipo de Benefício</th>
+                        <th class="text-center py-1">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for employee in employees %}
+                    <tr>
+                        <td class="px-2 py-1 text-center">{{ employee.id }}</td>
+                        <td class="px-2 py-1 text-start">{{ employee.code }}</td>
+                        <td class="px-2 py-1 text-start">{{ employee.firstname }} {{ employee.middlename }} {{ employee.lastname }}</td>
+                        <td class="px-2 py-1 text-start">{{ employee.department_id }}</td>
+                        <td class="px-2 py-1 text-start">{{ employee.position_id }}</td>
+                        <td class="px-2 py-1 text-start">{{ employee.address }}</td>
+
+
+                        <!-- 
+                        <td class="px-2 py-1 text-start">{{ employee.gestorcliente|default:"" }}</td>
+                        <td class="px-2 py-1 text-start">{{ employee.gestorextractta|default:"" }}</td>
+                        <td class="px-2 py-1 text-start">{{ employee.salaryCLT }}</td>
+                        <td class="px-2 py-1 text-start">{{ employee.salaryPJ }}</td>
+                        <td class="px-2 py-1 text-start">{{ employee.salaryPS }}</td>
+                        <td class="px-2 py-1 text-start">{{ employee.salaryVA }}</td>
+                        <td class="px-2 py-1 text-start">{{ employee.salaryVR }}</td>
+                        <td class="px-2 py-1 text-start">{{ employee.salaryVT }}</td>
+                        <td class="px-2 py-1 text-start">{{ employee.salaryVC }}</td>
+                       -->
+                        <td class="px-2 py-1 text-center">
+                            {% if employee.status == 1 %}
+                            <span class="badge bg-primary rounded-pill px-3">Ativo</span> {% else %}
+                            <span class="badge bg-secondary rounded-pill px-3">Inativo</span> {% endif %}
+                        </td>
+
+                        <td class="px-2 py-1 text-center">
+                            {% if employee.tipoBeneficio == 1 %}
+                            <span class="badge bg-primary rounded-pill px-3">Extractta</span> {% else %}
+                            <span class="badge bg-secondary rounded-pill px-3">Cliente</span> {% endif %}
+                        </td>
+
+                        <td class="px-2 py-1 text-center">
+                            <button class="mdc-button mdc-button--raised p-1 icon-button mdc-ripple-upgraded view-data" type="button" data-id="{{ employee.pk }}" title="View Details">
+                                <i class="material-icons mdc-button__icon">visibility</i>
+                            </button>
+                            <button class="mdc-button mdc-button--raised p-1 icon-button filled-button--light mdc-ripple-upgraded edit-data" type="button" data-id="{{ employee.pk }}" title="Edit">
+                                <i class="material-icons mdc-button__icon">edit</i>
+                            </button>
+                            <button class="mdc-button mdc-button--raised p-1 icon-button filled-button--danger mdc-ripple-upgraded delete-data" type="button" data-id="{{ employee.pk }}" title="Delete">
+                                <i class="material-icons mdc-button__icon">delete_outline</i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!--
+            Legenda: <br>
+            Sal CLT - Salário-base Pessoa física <br> 
+            Sal PJ - Salário-base Pessoa Jurídica <br>
+            Sal PS - Benefício Plano de Saúde <br>
+            Sal VA - Benefício Vale-Alimentação <br>
+            Sal VR - Benefício Vale-Refeição <br>
+            Sal VT - Benefício Vale-Transporte <br>
+            Sal VC - Benefício Vale-Combustível <br>
+        -->
+        </div>
+    </div>
+</div>
+
+{% endblock pageContent %} 
+{% block ScriptBlock %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const checkboxes = document.querySelectorAll('.filter-checkbox');
+    const table = document.getElementById('employee_table');
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.rows);
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', filterTable);
+    });
+
+    function filterTable() {
+        const checkedStatuses = Array.from(checkboxes)
+                                     .filter(checkbox => checkbox.checked)
+                                     .map(checkbox => checkbox.value);
+
+        rows.forEach(row => {
+            const statusCell = row.cells[9].textContent.trim(); // Atualize o índice do status para corresponder ao novo índice
+            if (checkedStatuses.includes(statusCell)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    // Initial filter on page load
+    filterTable();
+
+    let sortOrder = {
+        column2: true,
+        column3: true,
+        column4: true
+    };
+
+    window.sortTable = function (columnIndex) {
+        const table = document.getElementById('employee_table');
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.rows);
+
+        rows.sort((a, b) => {
+            const cellA = a.cells[columnIndex].innerText.toLowerCase();
+            const cellB = b.cells[columnIndex].innerText.toLowerCase();
+            if (cellA < cellB) {
+                return sortOrder[`column${columnIndex}`] ? -1 : 1;
+            }
+            if (cellA > cellB) {
+                return sortOrder[`column${columnIndex}`] ? 1 : -1;
+            }
+            return 0;
+        });
+
+        // Toggle sort order for next click
+        sortOrder[`column${columnIndex}`] = !sortOrder[`column${columnIndex}`];
+
+        // Append sorted rows to the tbody
+        rows.forEach(row => tbody.appendChild(row));
+    };
+});
+
+function filterTableSearch() {
+    const input = document.getElementById('searchInput');
+    const filter = input.value.toLowerCase();
+    const table = document.getElementById('employee_table');
+    const tbody = table.getElementsByTagName('tbody')[0];
+    const rows = tbody.getElementsByTagName('tr');
+
+    for (let i = 0; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName('td');
+        let match = false;
+        for (let j = 0; j < cells.length; j++) {
+            if (cells[j]) {
+                if (cells[j].innerText.toLowerCase().indexOf(filter) > -1) {
+                    match = true;
+                    break;
+                }
+            }
+        }
+        if (match) {
+            rows[i].style.display = '';
+        } else {
+            rows[i].style.display = 'none';
+        }
+    }
+}
+
+// Sort table function
+document.getElementById('sortTableBtn').addEventListener('click', function () {
+    const table = document.getElementById('employee_table');
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.rows);
+    let ascending = true;
+
+    const compare = (a, b) => {
+        const aText = a.cells[2].textContent.trim().toLowerCase();
+        const bText = b.cells[2].textContent.trim().toLowerCase();
+        return ascending ? aText.localeCompare(bText) : bText.localeCompare(aText);
+    };
+
+    rows.sort(compare);
+    ascending = !ascending;
+
+    rows.forEach(row => tbody.appendChild(row));
+});
+
+</script>
+
+<script>
+    $(function() {
+        $('#create_new').click(function() {
+            uni_modal("Adicionar novo funcionário", "{% url 'manage_employees-page' %}", 'modal-lg')
+        })
+        $('.view-data').click(function() {
+            uni_modal("Detalhes de funcionário", "{% url 'view-employee-page' %}?id=" + $(this).attr('data-id'), 'mid-large')
+        })
+        $('.edit-data').click(function() {
+            uni_modal("Editar funcionário", "{% url 'manage_employees-page' %}?id=" + $(this).attr('data-id'), 'modal-lg')
+        })
+        $('.delete-data').click(function() {
+            _conf("Tem certeza que quer excluir este funcionário?", "delete_employee", [$(this).attr('data-id')])
+        })
+
+        $('#download_csv').click(function() {
+            downloadCSV();
+        })
+    })
+
+    function delete_employee($id) {
+        start_loader();
+        $.ajax({
+            headers: {
+                "X-CSRFToken": '{{csrf_token}}'
+            },
+            url: "{% url 'delete-employee' %}",
+            method: "POST",
+            data: {
+                id: $id
+            },
+            dataType: "json",
+            error: err => {
+                console.log(err)
+                alert_toast("Ocorreu um erro!", 'error');
+                end_loader();
+            },
+            success: function(resp) {
+                if (typeof resp == 'object' && resp.status == 'success') {
+                    location.reload();
+                } else {
+                    alert_toast("Ocorreu um erro!", 'error');
+                    end_loader();
+                }
+            }
+        })
+    }
+
+    function downloadCSV() {
+    var csv = [];
+    var rows = document.querySelectorAll("table tr");
+
+    for (var i = 0; i < rows.length; i++) {
+        var row = [], cols = rows[i].querySelectorAll("td, th");
+
+        for (var j = 0; j < cols.length - 1; j++) { // Skip the last column
+            var cellText = cols[j].innerText;
+
+            // Enclose values with commas in double quotes
+            if (cellText.includes(",")) {
+                cellText = `"${cellText}"`;
+            }
+
+            row.push(cellText);
+        }
+
+        csv.push(row.join(","));
+    }
+
+    // Download CSV
+    var csvFile = new Blob([csv.join("\n")], { type: "text/csv" });
+    var downloadLink = document.createElement("a");
+    downloadLink.download = "employees.csv";
+    downloadLink.href = window.URL.createObjectURL(csvFile);
+    downloadLink.style.display = "none";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+}
+</script>
+
+{% endblock ScriptBlock %}
